@@ -15,4 +15,6 @@ public:
 	void delStudent(int id);
 	void searchStudent(int id);
 	void sortStudents(int Type);
+	void saveToTxt();
+	void readFromTxt();
 };

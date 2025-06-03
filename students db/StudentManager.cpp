@@ -3,6 +3,7 @@
 #include <vector>
 #include "Student.h"
 #include "StudentManager.h"
+#include <fstream>
 using namespace std;
 
 //methods
@@ -46,7 +47,7 @@ void StudentManager::sortStudents(int Type) {
 		//id
 		for (int i = 0; i < students.size(); i++)
 		{
-			for (int j = i + 1; j < students.size(); j++) 
+			for (int j = i + 1; j < students.size(); j++)
 			{
 				if (students[i].getID() > students[j].getID())
 				{
@@ -60,7 +61,7 @@ void StudentManager::sortStudents(int Type) {
 		//gpa
 		for (int i = 0; i < students.size(); i++)
 		{
-			for (int j = i + 1; j < students.size(); j++) 
+			for (int j = i + 1; j < students.size(); j++)
 			{
 				if (students[i].getGpa() > students[j].getGpa())
 				{
@@ -74,7 +75,7 @@ void StudentManager::sortStudents(int Type) {
 		//name
 		for (int i = 0; i < students.size(); i++)
 		{
-			for (int j = i + 1; j < students.size(); j++) 
+			for (int j = i + 1; j < students.size(); j++)
 			{
 				if (students[i].getName() > students[j].getName())
 				{
@@ -88,7 +89,7 @@ void StudentManager::sortStudents(int Type) {
 		//DOB
 		for (int i = 0; i < students.size(); i++)
 		{
-			for (int j = i + 1; j < students.size(); j++) 
+			for (int j = i + 1; j < students.size(); j++)
 			{
 				if (students[i].getDOB() > students[j].getDOB())
 				{
@@ -102,4 +103,42 @@ void StudentManager::sortStudents(int Type) {
 	default:
 		break;
 	}
+}
+void StudentManager::saveToTxt() {
+	ofstream file("students.txt");
+	if (file.is_open())
+	{
+		for (int i = 0; i < students.size(); i++)
+		{
+			file << students[i].getID() << " " <<
+				students[i].getName() << " " <<
+				students[i].getDOB() << " " <<
+				students[i].getGpa() << " ";
+		}
+		cout << "Students saved to txt" << endl;
+	}
+	else {
+		cout << "Error to open file" << endl;
+	}
+
+}
+void StudentManager::readFromTxt() {
+	ifstream file("students.txt");
+	if (file.is_open())
+	{
+		int id;
+		string name, DOB;
+		double gpa;
+
+		while (file >> id >> name >> DOB >> gpa)
+		{
+			Student addedStud(id, name, DOB, gpa);
+			students.push_back(addedStud);
+			nextId++;
+		}
+	}
+	else {
+		cout << "Error to open file" << endl;
+	}
+	cout << "Students loaded from txt. You can print all students to see" << endl;
 }
